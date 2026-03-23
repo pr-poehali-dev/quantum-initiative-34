@@ -1,21 +1,22 @@
 import { motion } from "framer-motion"
-import { Check } from "lucide-react"
+import Icon from "@/components/ui/icon"
 
-const plans = [
+const tips = [
   {
-    name: "Старт",
-    price: "1 200",
-    period: " руб/мес",
-    description: "Для личного портфолио",
-    features: ["5 страниц", "Свой домен", "Базовая аналитика", "Поддержка по email"],
+    icon: "Sun",
+    title: "Начни с рисующего",
+    description: "Поставь основной источник под углом 45° — и сразу получишь профессиональный светотеневой рисунок.",
   },
   {
-    name: "Про",
-    price: "2 900",
-    period: " руб/мес",
-    description: "Для растущих авторов",
-    features: ["Безлимит страниц", "Приоритет поддержки", "Расширенная аналитика", "Свой брендинг", "Работа в команде"],
+    icon: "Circle",
+    title: "Контролируй заполняющий",
+    description: "Соотношение рисующего к заполняющему 2:1 даёт мягкий, но объёмный результат.",
     popular: true,
+  },
+  {
+    icon: "Sparkles",
+    title: "Добавь контровый",
+    description: "Подсветка сзади отделяет модель от фона и придаёт кадру кинематографичную глубину.",
   },
 ]
 
@@ -29,54 +30,37 @@ export function PricingSection() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
         >
-          <h2 className="text-3xl md:text-5xl font-serif text-foreground">Простые и понятные цены</h2>
-          <p className="text-muted-foreground mt-4 max-w-md mx-auto">Начните бесплатно, платите когда готовы.</p>
+          <h2 className="text-3xl md:text-5xl font-serif text-foreground">Три правила профессионального света</h2>
+          <p className="text-muted-foreground mt-4 max-w-md mx-auto">
+            Грамотное сочетание источников света — основа выразительного портрета.
+          </p>
         </motion.div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-3xl mx-auto">
-          {plans.map((plan, i) => (
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+          {tips.map((tip, i) => (
             <motion.div
               key={i}
-              className={`relative bg-background rounded-xl p-8 ticket-edge ${plan.popular ? "ring-2 ring-primary" : ""}`}
+              className={`relative bg-background rounded-xl p-8 ticket-edge ${tip.popular ? "ring-2 ring-primary" : ""}`}
               initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ delay: i * 0.1 }}
               data-clickable
             >
-              {plan.popular && (
+              {tip.popular && (
                 <span className="absolute -top-3 left-1/2 -translate-x-1/2 bg-lime text-foreground text-xs font-medium px-3 py-1 rounded-full">
-                  Популярный
+                  Ключевое правило
                 </span>
               )}
 
-              <div className="text-center pb-6 border-b border-dashed border-border">
-                <h3 className="font-serif text-xl text-foreground">{plan.name}</h3>
-                <div className="mt-4 flex items-baseline justify-center gap-1">
-                  <span className="text-4xl md:text-5xl font-serif text-foreground">{plan.price}</span>
-                  <span className="text-muted-foreground">{plan.period}</span>
+              <div className="pb-6 border-b border-dashed border-border text-center">
+                <div className="w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center mx-auto mb-4">
+                  <Icon name={tip.icon as "Sun"} size={22} className="text-primary" />
                 </div>
-                <p className="text-muted-foreground text-sm mt-2">{plan.description}</p>
+                <h3 className="font-serif text-xl text-foreground">{tip.title}</h3>
               </div>
 
-              <ul className="mt-6 space-y-3">
-                {plan.features.map((feature, j) => (
-                  <li key={j} className="flex items-center gap-3 text-foreground">
-                    <Check className="w-4 h-4 text-primary flex-shrink-0" />
-                    <span className="text-sm">{feature}</span>
-                  </li>
-                ))}
-              </ul>
-
-              <button
-                className={`w-full mt-8 py-3 px-6 rounded-lg font-medium transition-colors ${
-                  plan.popular
-                    ? "bg-primary text-primary-foreground hover:bg-primary/90"
-                    : "bg-secondary text-foreground hover:bg-accent/30"
-                }`}
-              >
-                Начать
-              </button>
+              <p className="mt-6 text-muted-foreground text-sm leading-relaxed text-center">{tip.description}</p>
             </motion.div>
           ))}
         </div>
